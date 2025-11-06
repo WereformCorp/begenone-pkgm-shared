@@ -2,36 +2,44 @@
 import React from "react";
 import { View, TextInput, Text, StyleSheet } from "react-native";
 import { inputStyles } from "../../styles/inputStyles";
+import {
+  useFonts,
+  Inter_400Regular,
+  Inter_700Bold,
+} from "@expo-google-fonts/inter";
 
 export function InputField({
-  containerStyles,
-  inputWrapperStyles,
-  labelStyles,
-  customInputStyle,
-  customErrorStyle,
   label,
   placeholder,
   error,
   iconLeft,
   iconRight,
+  inputStyle,
   ...props
 }) {
-  return (
-    <View style={[containerStyles]}>
-      {label && <Text style={labelStyles}>{label}</Text>}
+  const [fontsLoaded] = useFonts({
+    Inter_400Regular,
+    Inter_700Bold,
+  });
 
-      <View style={[inputWrapperStyles]}>
+  if (!fontsLoaded) {
+    return null; // or <AppLoading />
+  }
+
+  return (
+    <>
+      <View style={[inputStyles.inputWrapper]}>
         {iconLeft && <View style={inputStyles.icon}>{iconLeft}</View>}
         <TextInput
           placeholder={placeholder}
           placeholderTextColor="#999"
-          style={[customInputStyle]}
+          style={[inputStyles.input, inputStyle]}
           {...props}
         />
         {iconRight && <View style={inputStyles.icon}>{iconRight}</View>}
       </View>
 
       {error && <Text style={customErrorStyle}>{error}</Text>}
-    </View>
+    </>
   );
 }
