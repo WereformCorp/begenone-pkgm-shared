@@ -1,28 +1,30 @@
 export const inputStyles = {
-  // container: {
-  //   marginVertical: 10,
-  //   paddingHorizontal: 10,
-  // },
-  // label: {
-  //   fontSize: 14,
-  //   marginBottom: 5,
-  //   color: "#333",
-  // },
-  // inputWrapper: {
-  //   // flexDirection: "row",
-  //   // borderWidth: 1,
-  //   // borderColor: "#ccc",
-  //   borderRadius: 8,
-  //   // backgroundColor: "#fff",
-  // },
-  input: {
-    borderWidth: 1,
-    height: "40",
-    // width: "100%",
-    alignSelf: "center",
-    borderColor: "#ccc",
-    borderRadius: 8,
+  label: {
+    fontSize: 14,
+    marginBottom: 5,
+    color: "#333",
   },
+  inputWrapper: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: 40,
+    borderWidth: 1,
+    borderRadius: 8,
+    borderColor: "#fff",
+    backgroundColor: "#fff",
+    width: 320,
+    overflow: "hidden", // necessary for clipping children
+  },
+  input: {
+    height: 50,
+    width: "85%",
+    paddingLeft: 14,
+    paddingRight: 14,
+    fontFamily: "Inter",
+    fontWeight: "700",
+    color: "#3c3c3c",
+  },
+
   icon: {
     marginHorizontal: 5,
   },
