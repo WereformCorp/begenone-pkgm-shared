@@ -1,10 +1,16 @@
 export const globalStyles = {
   colors: {
     colorPrimary100: "#151515",
+
     colorPrimary200: "#252525",
+
     colorPrimary300: "#3C3C3C",
+    colorPrimary350: "rgba(60,60,60,.2)",
+
     colorPrimary400: "#7F7F7F",
+
     colorPrimary500: "#D3D3D3",
+
     colorPrimary600: "#FF8800",
   },
   borders: {
