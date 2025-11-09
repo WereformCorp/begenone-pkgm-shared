@@ -4,14 +4,8 @@ import ModalSelector from "react-native-modal-selector";
 import { useState } from "react";
 import { dropDownStyles } from "../../styles/dropDownStyles";
 
-export function DropDown({}) {
+export function DropDown({ downIcon, data }) {
   const [selected, setSelected] = useState();
-
-  const data = [
-    { key: 1, label: "Java" },
-    { key: 2, label: "JavaScript" },
-    { key: 3, label: "Python" },
-  ];
 
   return (
     <View style={dropDownStyles.container}>
@@ -19,22 +13,22 @@ export function DropDown({}) {
         data={data}
         initValue="Select language"
         onChange={option => setSelected(option.label)}
-        overlayStyle={{ backgroundColor: "rgba(0,0,0,0.7)" }}
+        overlayStyle={dropDownStyles.overlayStyle}
         optionTextStyle={{ color: "#fff" }}
-        optionContainerStyle={{ backgroundColor: "#1e1e1e" }}
+        optionContainerStyle={dropDownStyles.optionContainerStyle}
+        cancelTextStyle={{
+          color: "#000",
+          fontFamily: "Inter",
+          fontWeight: "semibold",
+        }}
+        cancelStyle={dropDownStyles.cancelContainerStyle}
       >
-        <Text
-          style={{
-            padding: 12,
-            backgroundColor: "#151515",
-            color: "white",
-            borderRadius: 6,
-            borderWidth: 1,
-            borderColor: "#333",
-          }}
-        >
-          {selected || "Select language"}
-        </Text>
+        <View style={dropDownStyles.dropDownContainer}>
+          <Text style={dropDownStyles.dropDownText}>
+            {selected || "Select Option"}
+          </Text>
+          {downIcon}
+        </View>
       </ModalSelector>
     </View>
   );

@@ -1,5 +1,6 @@
 export const globalStyles = {
   colors: {
+    colorPrimary50: "rgba(21, 21, 21, .7)",
     colorPrimary100: "#151515",
 
     colorPrimary200: "#252525",
