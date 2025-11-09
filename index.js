@@ -6,3 +6,4 @@ export { MenuInteraction } from "./src/components/menus/MenuInteraction";
 export { MenuChannelMeta } from "./src/components/menus/MenuChannelMeta";
 export { InputComment } from "./src/components/inputs/InputComment.jsx";
 export { DropDown } from "./src/components/dropdowns/DropDown.jsx";
+export { CustomizedTitle } from "./src/components/titles/CustomizedTitle.jsx";
