@@ -1,19 +1,41 @@
-import { View } from "react-native";
-import { Picker } from "@react-native-picker/picker";
+import { Text, View } from "react-native";
+import { SelectList } from "react-native-dropdown-select-list";
+import ModalSelector from "react-native-modal-selector";
 import { useState } from "react";
+import { dropDownStyles } from "../../styles/dropDownStyles";
 
 export function DropDown({}) {
-  const [selectedLanguage, setSelectedLanguage] = useState();
+  const [selected, setSelected] = useState();
+
+  const data = [
+    { key: 1, label: "Java" },
+    { key: 2, label: "JavaScript" },
+    { key: 3, label: "Python" },
+  ];
 
   return (
-    <View>
-      <Picker
-        selectedValue={selectedLanguage}
-        onValueChange={itemValue => setSelectedLanguage(itemValue)}
+    <View style={dropDownStyles.container}>
+      <ModalSelector
+        data={data}
+        initValue="Select language"
+        onChange={option => setSelected(option.label)}
+        overlayStyle={{ backgroundColor: "rgba(0,0,0,0.7)" }}
+        optionTextStyle={{ color: "#fff" }}
+        optionContainerStyle={{ backgroundColor: "#1e1e1e" }}
       >
-        <Picker.Item label="Java" value="java" />
-        <Picker.Item label="JavaScript" value="js" />
-      </Picker>
+        <Text
+          style={{
+            padding: 12,
+            backgroundColor: "#151515",
+            color: "white",
+            borderRadius: 6,
+            borderWidth: 1,
+            borderColor: "#333",
+          }}
+        >
+          {selected || "Select language"}
+        </Text>
+      </ModalSelector>
     </View>
   );
 }

@@ -7,5 +7,6 @@ export const dropDownStyles = {
     height: 40,
     flex: 1,
     backgroundColor: "#fff",
+    color: "#151515",
   },
 };
