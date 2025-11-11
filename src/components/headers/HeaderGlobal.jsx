@@ -1,4 +1,4 @@
-import { Image, View } from "react-native";
+import { Image, TouchableOpacity, View } from "react-native";
 import { headerGlobalStyles } from "../../styles/headerGlobalStyles";
 
 export function HeaderGlobal({ aiIcon, notificationIcon, searchIcon }) {
@@ -11,9 +11,15 @@ export function HeaderGlobal({ aiIcon, notificationIcon, searchIcon }) {
         style={headerGlobalStyles.image}
       />
       <View style={headerGlobalStyles.iconsContainer}>
-        <View style={headerGlobalStyles.icons}>{aiIcon}</View>
-        <View style={headerGlobalStyles.icons}>{notificationIcon}</View>
-        <View style={headerGlobalStyles.icons}>{searchIcon}</View>
+        <TouchableOpacity style={headerGlobalStyles.icons}>
+          {aiIcon}
+        </TouchableOpacity>
+        <TouchableOpacity style={headerGlobalStyles.icons}>
+          {notificationIcon}
+        </TouchableOpacity>
+        <TouchableOpacity style={headerGlobalStyles.icons}>
+          {searchIcon}
+        </TouchableOpacity>
       </View>
     </View>
   );

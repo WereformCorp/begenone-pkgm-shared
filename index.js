@@ -8,3 +8,5 @@ export { InputComment } from "./src/components/inputs/InputComment.jsx";
 export { DropDown } from "./src/components/dropdowns/DropDown.jsx";
 export { CustomizedTitle } from "./src/components/titles/CustomizedTitle.jsx";
 export { CustomizedButton } from "./src/components/buttons/CustomizableButton.jsx";
+export { DateViews } from "./src/utils/DateViews.jsx";
+export { default as normalizeUrl } from "./src/utils/normalizeUrl.js";

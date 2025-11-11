@@ -1,6 +1,7 @@
+import { StyleSheet } from "react-native";
 import { globalStyles } from "./globalStyles";
 
-export const menuNavStyles = {
+export const menuNavStyles = StyleSheet.create({
   container: {
     flexDirection: "row",
     justifyContent: "space-evenly",
@@ -19,4 +20,4 @@ export const menuNavStyles = {
   uploadIcon: {
     color: globalStyles.colors.colorPrimary600,
   },
-};
+});

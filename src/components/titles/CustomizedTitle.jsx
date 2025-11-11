@@ -6,6 +6,8 @@ export function CustomizedTitle({
   fontFamily,
   textColor,
   style,
+  textStyle,
+  dateTextStyles,
 }) {
   const displayTitle =
     title && title.length > 75
@@ -13,9 +15,19 @@ export function CustomizedTitle({
       : title || "Here is your default Title!";
 
   return (
-    <View style={[style, { width: "auto" }]}>
+    <View style={[{ width: "100%" }, style]}>
       <Text
-        style={{ fontFamily: fontFamily, fontSize: fontSize, color: textColor }}
+        style={[
+          {
+            flexShrink: 1,
+            fontFamily: fontFamily,
+            fontSize: fontSize,
+            color: textColor,
+            flexWrap: "wrap",
+          },
+          textStyle,
+        ]}
+        numberOfLines={2}
       >
         {displayTitle}
       </Text>

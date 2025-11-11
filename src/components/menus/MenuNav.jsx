@@ -1,4 +1,4 @@
-import { Text, View } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 import { menuNavStyles } from "../../styles/menuNavStyles";
 
 export function MenuNav({
@@ -10,11 +10,13 @@ export function MenuNav({
 }) {
   return (
     <View style={menuNavStyles.container}>
-      <View>{homeIcon}</View>
-      <View>{wireIcon}</View>
-      <View style={menuNavStyles.uploadIcon}>{uploadIcon}</View>
-      <View>{videoIcon}</View>
-      <View>{profileIcon}</View>
+      <TouchableOpacity>{homeIcon}</TouchableOpacity>
+      <TouchableOpacity>{wireIcon}</TouchableOpacity>
+      <TouchableOpacity style={menuNavStyles.uploadIcon}>
+        {uploadIcon}
+      </TouchableOpacity>
+      <TouchableOpacity>{videoIcon}</TouchableOpacity>
+      <TouchableOpacity>{profileIcon}</TouchableOpacity>
     </View>
   );
 }

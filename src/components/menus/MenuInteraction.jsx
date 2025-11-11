@@ -1,4 +1,4 @@
-import { View } from "react-native";
+import { TouchableOpacity, View } from "react-native";
 import { MenuInteractionStyles } from "../../styles/MenuInteractionStyles";
 
 export const MenuInteraction = ({
@@ -8,22 +8,38 @@ export const MenuInteraction = ({
   commentIcon,
   repostIcon,
   moreOptionsIcon,
+  containerStyles,
+  columnMainIconStyles,
 }) => {
   return (
-    <View style={MenuInteractionStyles.container}>
-      <View style={MenuInteractionStyles.column_mainIcons}>
-        {likeIcon && <View style={MenuInteractionStyles.icon}>{likeIcon}</View>}
+    <View style={[MenuInteractionStyles.container, containerStyles]}>
+      <View
+        style={[MenuInteractionStyles.column_mainIcons, columnMainIconStyles]}
+      >
+        {likeIcon && (
+          <TouchableOpacity>
+            <View style={MenuInteractionStyles.icon}>{likeIcon}</View>
+          </TouchableOpacity>
+        )}
         {dislikeIcon && (
-          <View style={MenuInteractionStyles.icon}>{dislikeIcon}</View>
+          <TouchableOpacity>
+            <View style={MenuInteractionStyles.icon}>{dislikeIcon}</View>
+          </TouchableOpacity>
         )}
         {shareIcon && (
-          <View style={MenuInteractionStyles.icon}>{shareIcon}</View>
+          <TouchableOpacity>
+            <View style={MenuInteractionStyles.icon}>{shareIcon}</View>
+          </TouchableOpacity>
         )}
         {commentIcon && (
-          <View style={MenuInteractionStyles.icon}>{commentIcon}</View>
+          <TouchableOpacity>
+            <View style={MenuInteractionStyles.icon}>{commentIcon}</View>
+          </TouchableOpacity>
         )}
         {repostIcon && (
-          <View style={MenuInteractionStyles.icon}>{repostIcon}</View>
+          <TouchableOpacity>
+            <View style={MenuInteractionStyles.icon}>{repostIcon}</View>
+          </TouchableOpacity>
         )}
       </View>
 

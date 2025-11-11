@@ -7,6 +7,7 @@ export function CustomizedButton({
   textColor,
   fontSize,
   fontFamily,
+  fontWeight,
   style,
 }) {
   if (!label) {
@@ -29,6 +30,7 @@ export function CustomizedButton({
             color: textColor || "#fff",
             fontSize: fontSize || 16,
             fontFamily: fontFamily,
+            fontWeight: fontWeight,
           },
         ]}
       >
