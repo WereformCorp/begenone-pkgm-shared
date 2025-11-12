@@ -1,6 +1,11 @@
+import { Platform, StyleSheet, useWindowDimensions } from "react-native";
 import { globalStyles } from "./globalStyles";
 
-export const MenuChannelMetaStyles = {
+export const checkDimensions = () => {};
+
+// checkDimensions();
+
+export const MenuChannelMetaStyles = StyleSheet.create({
   container: {
     width: "100%",
   },
@@ -10,8 +15,8 @@ export const MenuChannelMetaStyles = {
     flexDirection: "row",
     justifyContent: "space-between",
     marginTop: 12,
-    paddingRight: 24,
-    paddingLeft: 24,
+    paddingRight: 6,
+    paddingLeft: 6,
   },
 
   dateContainer: {
@@ -43,8 +48,10 @@ export const MenuChannelMetaStyles = {
     flexDirection: "row",
     backgroundColor: globalStyles.colors.colorPrimary200,
     // width: "100%",
-    margin: 12,
+    // margin: 12,
     padding: 12,
+    marginBottom: 6,
+    marginTop: 12,
     borderRadius: globalStyles.borders.borderPrimary100,
     justifyContent: "space-between",
   },
@@ -66,7 +73,7 @@ export const MenuChannelMetaStyles = {
 
   userName: {
     color: "#fff",
-    fontSize: 16,
+    fontSize: Platform.OS === "ios" ? 16 : 14,
     paddingBottom: 4,
     fontWeight: "bold",
   },
@@ -89,7 +96,7 @@ export const MenuChannelMetaStyles = {
 
   subscribeButtonContainer: {
     backgroundColor: globalStyles.colors.colorPrimary600,
-    width: 100,
+    width: Platform.OS === "ios" ? 100 : 80,
     borderRadius: globalStyles.borders.borderPrimary400,
     alignItems: "center",
     justifyContent: "center",
@@ -98,5 +105,6 @@ export const MenuChannelMetaStyles = {
   subscribeButtonText: {
     color: "#fff",
     fontWeight: "bold",
+    fontSize: Platform === "ios" ? 18 : 12,
   },
-};
+});
