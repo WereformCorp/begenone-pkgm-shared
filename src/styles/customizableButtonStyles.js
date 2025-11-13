@@ -11,4 +11,13 @@ export const customizableButtonStyles = StyleSheet.create({
     alignItems: "center",
     borderRadius: globalStyles.borders.borderPrimary100,
   },
+
+  buttonText: {
+    flexDirection: "row",
+    color: "#fff",
+    fontSize: 16,
+    textAlign: "center",
+    textAlignVertical: "center",
+    alignItems: "center",
+  },
 });

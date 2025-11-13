@@ -1,4 +1,4 @@
-import { Text, TouchableOpacity } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 import { customizableButtonStyles } from "../../styles/customizableButtonStyles";
 
 export function CustomizedButton({
@@ -8,6 +8,7 @@ export function CustomizedButton({
   fontSize,
   fontFamily,
   fontWeight,
+  customIcon,
   style,
 }) {
   if (!label) {
@@ -23,19 +24,34 @@ export function CustomizedButton({
       style={[customizableButtonStyles.buttonContainer, style]}
       activeOpacity={0.8}
     >
-      <Text
-        style={[
-          customizableButtonStyles.buttonText,
-          {
-            color: textColor || "#fff",
-            fontSize: fontSize || 16,
-            fontFamily: fontFamily,
-            fontWeight: fontWeight,
-          },
-        ]}
+      <View
+        style={
+          customIcon
+            ? {
+                flexDirection: "row",
+                width: "100%",
+                justifyContent: "space-between",
+                alignItems: "center",
+                paddingRight: 12,
+              }
+            : {}
+        }
       >
-        {label || "Default Button"}
-      </Text>
+        <Text
+          style={[
+            customizableButtonStyles.buttonText,
+            {
+              color: textColor || "#fff",
+              fontSize: fontSize || 16,
+              fontFamily: fontFamily,
+              fontWeight: fontWeight,
+            },
+          ]}
+        >
+          {label || "Default Button"}
+        </Text>
+        <View>{customIcon && customIcon}</View>
+      </View>
     </TouchableOpacity>
   );
 }
