@@ -15,6 +15,9 @@ export function InputField({
   iconLeft,
   iconRight,
   inputStyle,
+  inputWrapper,
+  multiline,
+  onChangeTextHandler,
   ...props
 }) {
   const [fontsLoaded] = useFonts({
@@ -26,14 +29,20 @@ export function InputField({
     return null; // or <AppLoading />
   }
 
+  // console.log(`Multi Line CHECK`, multiline);
+
+  const isMultiline = multiline || false;
+
   return (
     <>
-      <View style={[inputStyles.inputWrapper]}>
+      <View style={[inputStyles.inputWrapper, inputWrapper]}>
         {iconLeft && <View style={inputStyles.icon}>{iconLeft}</View>}
         <TextInput
           placeholder={placeholder}
           placeholderTextColor="#999"
+          multiline={isMultiline}
           style={[inputStyles.input, inputStyle]}
+          onChangeText={onChangeTextHandler}
           {...props}
         />
         {iconRight && <View style={inputStyles.icon}>{iconRight}</View>}
