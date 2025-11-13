@@ -18,9 +18,7 @@ let calcWidth;
 let calcHeight;
 
 export const MenuChannelMeta = ({
-  calendarIcon,
   timeAgo,
-  eyeIcon,
   viewsText,
   channelLogo,
   userName,
