@@ -5,6 +5,7 @@ export const dropDownStyles = {
     width: "auto",
     marginLeft: 16,
     marginRight: 16,
+    // justifyContent: "start",
   },
 
   picker: {
@@ -48,5 +49,6 @@ export const dropDownStyles = {
 
   dropDownText: {
     color: "#fff",
+    paddingLeft: 12,
   },
 };

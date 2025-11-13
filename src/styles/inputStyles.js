@@ -7,12 +7,12 @@ export const inputStyles = {
   inputWrapper: {
     flexDirection: "row",
     alignItems: "center",
-    marginTop: 40,
-    borderWidth: 1,
+
     borderRadius: 8,
-    borderColor: "#fff",
-    backgroundColor: "#fff",
-    width: 320,
+    borderWidth: 1,
+    borderColor: "rgba(37, 37, 37, 0)",
+    // backgroundColor: "#fff",
+    // width: 320,
     overflow: "hidden", // necessary for clipping children
   },
   input: {

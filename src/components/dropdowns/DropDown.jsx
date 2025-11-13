@@ -3,51 +3,38 @@ import { SelectList } from "react-native-dropdown-select-list";
 import ModalSelector from "react-native-modal-selector";
 import { useState } from "react";
 import { dropDownStyles } from "../../styles/dropDownStyles";
+import { Ionicons } from "@expo/vector-icons";
 
-export function DropDown({ downIcon, data }) {
-  const [selected, setSelected] = useState();
-
+export function DropDown({ selectText, data, styles }) {
+  const [selected, setSelected] = useState(selectText);
   return (
-    <View style={dropDownStyles.container}>
+    <View style={[dropDownStyles.container, styles]}>
       <ModalSelector
         data={data}
-        initValue="Select language"
-        onChange={option => setSelected(option.label)}
+        initValue={selectText || "Select Option"}
+        onChange={option => {
+          console.log("Selected option:", option); // <-- key + label!
+          setSelected(option);
+        }}
         overlayStyle={dropDownStyles.overlayStyle}
-        optionTextStyle={{ color: "#fff" }}
+        optionTextStyle={{ color: "#fff", fontWeight: "500" }}
         optionContainerStyle={dropDownStyles.optionContainerStyle}
         cancelTextStyle={{
           color: "#000",
           fontFamily: "Inter",
-          fontWeight: "semibold",
+          fontWeight: "800",
         }}
         cancelStyle={dropDownStyles.cancelContainerStyle}
       >
         <View style={dropDownStyles.dropDownContainer}>
           <Text style={dropDownStyles.dropDownText}>
-            {selected || "Select Option"}
+            {typeof selected === "string"
+              ? selected // shows default selectText
+              : selected?.label || "Select Option"}
           </Text>
-          {downIcon}
+          <Ionicons name="caret-down" size={16} color={"white"} />
         </View>
       </ModalSelector>
     </View>
   );
 }
-
-// import { View, Text } from "react-native";
-// import RNPickerSelect from "react-native-picker-select";
-
-// export const DropDown = () => {
-//   return (
-//     <View>
-//       <RNPickerSelect
-//         onValueChange={value => console.log(value)}
-//         items={[
-//           { label: "Football", value: "football" },
-//           { label: "Baseball", value: "baseball" },
-//           { label: "Hockey", value: "hockey" },
-//         ]}
-//       />
-//     </View>
-//   );
-// };
