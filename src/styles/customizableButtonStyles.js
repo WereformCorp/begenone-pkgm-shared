@@ -6,15 +6,17 @@ export const customizableButtonStyles = StyleSheet.create({
 
   buttonContainer: {
     height: 50,
-    width: "100%",
+    width: "auto",
+    flexGrow: 1,
     justifyContent: "center",
     alignItems: "center",
     borderRadius: globalStyles.borders.borderPrimary100,
+    backgroundColor: "#fff",
   },
 
   buttonText: {
     flexDirection: "row",
-    color: "#fff",
+    color: "#000",
     fontSize: 16,
     textAlign: "center",
     textAlignVertical: "center",

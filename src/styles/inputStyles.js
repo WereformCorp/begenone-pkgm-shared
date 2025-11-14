@@ -17,7 +17,7 @@ export const inputStyles = {
   },
   input: {
     height: 50,
-    width: "85%",
+    width: "auto",
     paddingLeft: 14,
     paddingRight: 14,
     fontFamily: "Inter",

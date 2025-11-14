@@ -9,7 +9,6 @@ import {
 } from "@expo-google-fonts/inter";
 
 export function InputField({
-  label,
   placeholder,
   error,
   iconLeft,
@@ -34,7 +33,7 @@ export function InputField({
   const isMultiline = multiline || false;
 
   return (
-    <>
+    <View>
       <View style={[inputStyles.inputWrapper, inputWrapper]}>
         {iconLeft && <View style={inputStyles.icon}>{iconLeft}</View>}
         <TextInput
@@ -49,6 +48,6 @@ export function InputField({
       </View>
 
       {error && <Text style={customErrorStyle}>{error}</Text>}
-    </>
+    </View>
   );
 }
