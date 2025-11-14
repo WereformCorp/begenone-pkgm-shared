@@ -17,6 +17,7 @@ export function InputField({
   inputWrapper,
   multiline,
   onChangeTextHandler,
+  Children,
   ...props
 }) {
   const [fontsLoaded] = useFonts({
@@ -46,7 +47,6 @@ export function InputField({
         />
         {iconRight && <View style={inputStyles.icon}>{iconRight}</View>}
       </View>
-
       {error && <Text style={customErrorStyle}>{error}</Text>}
     </View>
   );

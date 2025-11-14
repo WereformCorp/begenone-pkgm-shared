@@ -5,7 +5,7 @@ import { useState } from "react";
 import { dropDownStyles } from "../../styles/dropDownStyles";
 import { Ionicons } from "@expo/vector-icons";
 
-export function DropDown({ selectText, data, styles }) {
+export function DropDown({ selectText, data, styles, iconStyles }) {
   const [selected, setSelected] = useState(selectText);
   return (
     <View style={[dropDownStyles.container, styles]}>
@@ -32,7 +32,12 @@ export function DropDown({ selectText, data, styles }) {
               ? selected // shows default selectText
               : selected?.label || "Select Option"}
           </Text>
-          <Ionicons name="caret-down" size={16} color={"white"} />
+          <Ionicons
+            name="caret-down"
+            size={16}
+            color={"white"}
+            style={iconStyles}
+          />
         </View>
       </ModalSelector>
     </View>
