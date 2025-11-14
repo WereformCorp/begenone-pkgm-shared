@@ -16,7 +16,7 @@ export function InputField({
   inputStyle,
   inputWrapper,
   multiline,
-  onChangeTextHandler,
+  onChangeText,
   Children,
   ...props
 }) {
@@ -42,7 +42,7 @@ export function InputField({
           placeholderTextColor="#999"
           multiline={isMultiline}
           style={[inputStyles.input, inputStyle]}
-          onChangeText={onChangeTextHandler}
+          onChangeText={onChangeText}
           {...props}
         />
         {iconRight && <View style={inputStyles.icon}>{iconRight}</View>}
