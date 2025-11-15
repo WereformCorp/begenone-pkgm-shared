@@ -6,6 +6,7 @@ export const headerGlobalStyles = {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+    marginTop: -5,
   },
 
   iconsContainer: {

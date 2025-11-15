@@ -7,12 +7,14 @@ import {
   Inter_400Regular,
   Inter_700Bold,
 } from "@expo-google-fonts/inter";
+import { Ionicons } from "@expo/vector-icons";
 
 export function InputField({
   placeholder,
   error,
   iconLeft,
   iconRight,
+  iconRightColor,
   inputStyle,
   inputWrapper,
   multiline,
@@ -45,9 +47,19 @@ export function InputField({
           onChangeText={onChangeText}
           {...props}
         />
-        {iconRight && <View style={inputStyles.icon}>{iconRight}</View>}
+        {iconRight && (
+          <View style={inputStyles.icon}>
+            <Ionicons
+              name={iconRight}
+              size={18}
+              color={iconRightColor || "#fff"}
+            />
+          </View>
+        )}
       </View>
       {error && <Text style={customErrorStyle}>{error}</Text>}
     </View>
   );
 }
+// ~2.28.0
+// ~4.16.0

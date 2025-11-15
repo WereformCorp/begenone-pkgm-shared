@@ -7,16 +7,22 @@ export function MenuNav({
   uploadIcon,
   videoIcon,
   profileIcon,
+
+  onPressHome,
+  onPressWire,
+  onPressUpload,
+  onPressVideo,
+  onPressProfile,
 }) {
   return (
     <View style={menuNavStyles.container}>
-      <TouchableOpacity>{homeIcon}</TouchableOpacity>
-      <TouchableOpacity>{wireIcon}</TouchableOpacity>
-      <TouchableOpacity style={menuNavStyles.uploadIcon}>
-        {uploadIcon}
+      <TouchableOpacity onPress={onPressHome}>{homeIcon}</TouchableOpacity>
+      <TouchableOpacity onPress={onPressWire}>{wireIcon}</TouchableOpacity>
+      <TouchableOpacity onPress={onPressUpload}>{uploadIcon}</TouchableOpacity>
+      <TouchableOpacity onPress={onPressVideo}>{videoIcon}</TouchableOpacity>
+      <TouchableOpacity onPress={onPressProfile}>
+        {profileIcon}
       </TouchableOpacity>
-      <TouchableOpacity>{videoIcon}</TouchableOpacity>
-      <TouchableOpacity>{profileIcon}</TouchableOpacity>
     </View>
   );
 }
