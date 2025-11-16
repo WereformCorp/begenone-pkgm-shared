@@ -7,7 +7,9 @@ export const checkDimensions = () => {};
 
 export const MenuChannelMetaStyles = StyleSheet.create({
   container: {
-    width: "100%",
+    width: "auto",
+    marginRight: 12,
+    marginLeft: 12,
   },
 
   dateViewsContainer: {
@@ -30,10 +32,12 @@ export const MenuChannelMetaStyles = StyleSheet.create({
 
   viewsContainer: {
     flexDirection: "row",
+    alignItems: "center",
   },
 
   eyeIcon: {
     marginRight: 8,
+    marginLeft: 8,
   },
 
   dateText: {

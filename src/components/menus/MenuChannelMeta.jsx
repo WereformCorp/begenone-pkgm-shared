@@ -26,41 +26,6 @@ export const MenuChannelMeta = ({
   containerStyles,
   channelContainerStyles,
 }) => {
-  const { width, height } = useWindowDimensions();
-
-  // // normalize to a readable scale — multiply by 20 just for clarity
-  // const scale = 10 / (height / width);
-  // const ratioWidth = Number(scale.toFixed(4));
-  // const ratioHeight = 10;
-
-  // if (Platform.OS === "ios") {
-  //   console.log(`📱 iOS ratio: ${ratioWidth} : ${ratioHeight}`);
-  // } else if (Platform.OS === "android") {
-  //   console.log(`🤖 Android ratio: ${ratioWidth} : ${ratioHeight}`);
-  // }
-
-  // const dimensionRatio = width / height;
-  // const roundedRatio = Number(dimensionRatio.toFixed(5));
-
-  // if (Platform.OS === "ios") {
-  //   console.log("📱 iOS Dimensions");
-  //   console.log("Width:", width);
-  //   console.log("Height:", height);
-  //   console.log("Ratio (width/height):", roundedRatio);
-  // } else if (Platform.OS === "android") {
-  //   console.log("🤖 Android Dimensions");
-  //   console.log("Width:", width);
-  //   console.log("Height:", height);
-  //   console.log("Ratio (width/height):", roundedRatio);
-  // }
-
-  // useEffect(() => {
-  //   console.log(`Platform: ${Platform.OS.toUpperCase()}`);
-  //   console.log(`Width: ${width}`);
-  //   console.log(`Height: ${height}`);
-  //   console.log("------------------------");
-  // }, [width, height]);
-
   return (
     <View style={[MenuChannelMetaStyles.container, containerStyles]}>
       <View style={MenuChannelMetaStyles.dateViewsContainer}>
@@ -73,12 +38,12 @@ export const MenuChannelMeta = ({
           </Text>
         </View>
         <View style={MenuChannelMetaStyles.viewsContainer}>
+          <Text style={MenuChannelMetaStyles.viewsText}>
+            {viewsText || "0"}
+          </Text>
           <View style={MenuChannelMetaStyles.eyeIcon}>
             <Ionicons name="eye" size={16} color="white" />
           </View>
-          <Text style={MenuChannelMetaStyles.viewsText}>
-            {viewsText || "123,400"}
-          </Text>
         </View>
       </View>
       <View style={MenuChannelMetaStyles.channelMetaContainer}>
@@ -99,14 +64,24 @@ export const MenuChannelMeta = ({
             </Text>
             <View style={MenuChannelMetaStyles.subCountContainer}>
               <Text style={MenuChannelMetaStyles.subCount}>
-                {subscribersCount || "123,400"}
+                {subscribersCount || "0"}
               </Text>
               <Text style={MenuChannelMetaStyles.subText}>Subscribers</Text>
             </View>
           </View>
         </View>
-        <Pressable style={MenuChannelMetaStyles.subscribeButtonContainer}>
-          <Text style={MenuChannelMetaStyles.subscribeButtonText}>
+        <Pressable
+          style={[
+            MenuChannelMetaStyles.subscribeButtonContainer,
+            { backgroundColor: "#303030" },
+          ]}
+        >
+          <Text
+            style={[
+              MenuChannelMetaStyles.subscribeButtonText,
+              { color: "#7f7f7f" },
+            ]}
+          >
             Subscribe
           </Text>
         </Pressable>
