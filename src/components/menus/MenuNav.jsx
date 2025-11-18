@@ -5,13 +5,13 @@ export function MenuNav({
   homeIcon,
   wireIcon,
   uploadIcon,
-  videoIcon,
+  channelIcon,
   profileIcon,
 
   onPressHome,
   onPressWire,
   onPressUpload,
-  onPressVideo,
+  onPressChannel,
   onPressProfile,
 }) {
   return (
@@ -19,7 +19,9 @@ export function MenuNav({
       <TouchableOpacity onPress={onPressHome}>{homeIcon}</TouchableOpacity>
       <TouchableOpacity onPress={onPressWire}>{wireIcon}</TouchableOpacity>
       <TouchableOpacity onPress={onPressUpload}>{uploadIcon}</TouchableOpacity>
-      <TouchableOpacity onPress={onPressVideo}>{videoIcon}</TouchableOpacity>
+      <TouchableOpacity onPress={onPressChannel}>
+        {channelIcon}
+      </TouchableOpacity>
       <TouchableOpacity onPress={onPressProfile}>
         {profileIcon}
       </TouchableOpacity>

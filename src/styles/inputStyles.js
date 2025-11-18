@@ -16,7 +16,7 @@ export const inputStyles = {
     overflow: "hidden", // necessary for clipping children
   },
   input: {
-    height: 50,
+    // height: 50,
     width: "auto",
     paddingLeft: 14,
     paddingRight: 14,

@@ -3,8 +3,8 @@ import { globalStyles } from "./globalStyles";
 export const dropDownStyles = {
   container: {
     width: "auto",
-    marginLeft: 16,
-    marginRight: 16,
+    // marginLeft: 16,
+    // marginRight: 16,
     // justifyContent: "start",
   },
 

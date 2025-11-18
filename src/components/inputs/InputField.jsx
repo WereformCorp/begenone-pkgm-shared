@@ -43,7 +43,11 @@ export function InputField({
           placeholder={placeholder}
           placeholderTextColor="#999"
           multiline={isMultiline}
-          style={[inputStyles.input, inputStyle]}
+          style={[
+            inputStyles.input,
+            inputStyle,
+            isMultiline && { textAlignVertical: "top" },
+          ]}
           onChangeText={onChangeText}
           {...props}
         />
