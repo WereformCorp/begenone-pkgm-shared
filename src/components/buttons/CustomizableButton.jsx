@@ -10,6 +10,7 @@ export function CustomizedButton({
   fontWeight,
   customIcon,
   style,
+  isDisabled,
 }) {
   if (!label) {
     console.warn("CustomizedButton: 'label' prop is missing.");
@@ -23,6 +24,7 @@ export function CustomizedButton({
       }
       style={[customizableButtonStyles.buttonContainer, style]}
       activeOpacity={0.8}
+      disabled={isDisabled}
     >
       <View
         style={

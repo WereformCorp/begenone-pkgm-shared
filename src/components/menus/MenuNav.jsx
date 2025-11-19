@@ -1,5 +1,6 @@
 import { Text, TouchableOpacity, View } from "react-native";
 import { menuNavStyles } from "../../styles/menuNavStyles";
+import { Ionicons } from "@expo/vector-icons";
 
 export function MenuNav({
   homeIcon,
@@ -23,7 +24,9 @@ export function MenuNav({
         {channelIcon}
       </TouchableOpacity>
       <TouchableOpacity onPress={onPressProfile}>
-        {profileIcon}
+        {profileIcon || (
+          <Ionicons name="person-outline" size={24} color="white" />
+        )}
       </TouchableOpacity>
     </View>
   );

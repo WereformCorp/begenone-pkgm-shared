@@ -20,6 +20,7 @@ export function InputField({
   multiline,
   onChangeText,
   Children,
+  onPressFunction,
   ...props
 }) {
   const [fontsLoaded] = useFonts({
