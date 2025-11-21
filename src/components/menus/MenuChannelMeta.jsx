@@ -37,14 +37,14 @@ export const MenuChannelMeta = ({
             {timeAgo || "14 Hours Ago"}
           </Text>
         </View>
-        <View style={MenuChannelMetaStyles.viewsContainer}>
+        {/* <View style={MenuChannelMetaStyles.viewsContainer}>
           <Text style={MenuChannelMetaStyles.viewsText}>
             {viewsText || "0"}
           </Text>
           <View style={MenuChannelMetaStyles.eyeIcon}>
             <Ionicons name="eye" size={16} color="white" />
           </View>
-        </View>
+        </View> */}
       </View>
       <View style={MenuChannelMetaStyles.channelMetaContainer}>
         <View style={MenuChannelMetaStyles.channelMetaContainer_ColumnOne}>
