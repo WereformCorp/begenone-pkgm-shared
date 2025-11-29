@@ -17,12 +17,10 @@ export function MenuNav({
 }) {
   return (
     <View style={menuNavStyles.container}>
-      <TouchableOpacity onPress={onPressHome} disabled={true}>
-        {homeIcon}
-      </TouchableOpacity>
+      <TouchableOpacity onPress={onPressHome}>{homeIcon}</TouchableOpacity>
       <TouchableOpacity onPress={onPressWire}>{wireIcon}</TouchableOpacity>
       <TouchableOpacity onPress={onPressUpload}>{uploadIcon}</TouchableOpacity>
-      <TouchableOpacity onPress={onPressChannel} disabled={true}>
+      <TouchableOpacity onPress={onPressChannel}>
         {channelIcon}
       </TouchableOpacity>
       <TouchableOpacity onPress={onPressProfile}>

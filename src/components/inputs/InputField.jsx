@@ -19,6 +19,7 @@ export function InputField({
   inputWrapper,
   multiline,
   onChangeText,
+  isEditable,
   Children,
   // onPressFunction,
   ...props
@@ -41,6 +42,7 @@ export function InputField({
       <View style={[inputStyles.inputWrapper, inputWrapper]}>
         {iconLeft && <View style={inputStyles.icon}>{iconLeft}</View>}
         <TextInput
+          editable={isEditable}
           placeholder={placeholder}
           placeholderTextColor="#999"
           multiline={isMultiline}

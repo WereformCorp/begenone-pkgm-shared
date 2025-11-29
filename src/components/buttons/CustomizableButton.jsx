@@ -1,9 +1,11 @@
 import { Text, TouchableOpacity, View } from "react-native";
 import { customizableButtonStyles } from "../../styles/customizableButtonStyles";
+import { useState } from "react";
 
 export function CustomizedButton({
   label,
   onPress,
+  onPressStyle,
   textColor,
   fontSize,
   fontFamily,
@@ -16,14 +18,22 @@ export function CustomizedButton({
     console.warn("CustomizedButton: 'label' prop is missing.");
   }
 
+  const [pressed, setPressed] = useState(false);
+
   return (
     <TouchableOpacity
       onPress={
         onPress ||
         (() => console.warn("CustomizedButton: onPress not provided"))
       }
-      style={[customizableButtonStyles.buttonContainer, style]}
-      activeOpacity={0.8}
+      onPressIn={() => setPressed(true)}
+      onPressOut={() => setPressed(false)}
+      style={[
+        customizableButtonStyles.buttonContainer,
+        style,
+        pressed && onPressStyle,
+      ]}
+      activeOpacity={1}
       disabled={isDisabled}
     >
       <View
