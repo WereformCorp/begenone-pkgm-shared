@@ -1,6 +1,12 @@
 // packages/begenone-pkgm-shared/src/components/inputs/InputField.jsx
-import React from "react";
-import { View, TextInput, Text, StyleSheet } from "react-native";
+import React, { useState } from "react";
+import {
+  View,
+  TextInput,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
 import { inputStyles } from "../../styles/inputStyles";
 import {
   useFonts,
@@ -14,12 +20,14 @@ export function InputField({
   error,
   iconLeft,
   iconRight,
+  onIconPress,
   iconRightColor,
   inputStyle,
   inputWrapper,
   multiline,
   onChangeText,
   isEditable,
+  secureTextEntry,
   Children,
   // onPressFunction,
   ...props
@@ -52,16 +60,21 @@ export function InputField({
             isMultiline && { textAlignVertical: "top" },
           ]}
           onChangeText={onChangeText}
+          secureTextEntry={secureTextEntry}
           {...props}
         />
         {iconRight && (
-          <View style={inputStyles.icon}>
+          <TouchableOpacity
+            style={inputStyles.icon}
+            onPress={onIconPress}
+            disabled={!onIconPress}
+          >
             <Ionicons
               name={iconRight}
               size={18}
               color={iconRightColor || "#fff"}
             />
-          </View>
+          </TouchableOpacity>
         )}
       </View>
       {error && <Text style={customErrorStyle}>{error}</Text>}
