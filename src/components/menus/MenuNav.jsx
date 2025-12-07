@@ -1,4 +1,4 @@
-import { Text, TouchableOpacity, View } from "react-native";
+import { TouchableOpacity, View } from "react-native";
 import { menuNavStyles } from "../../styles/menuNavStyles";
 import { Ionicons } from "@expo/vector-icons";
 

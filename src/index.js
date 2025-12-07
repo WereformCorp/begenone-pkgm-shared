@@ -1,4 +1,3 @@
-export { SampleButton } from "./components/buttons/samplebutton";
 export { InputField } from "./components/inputs/InputField";
 export { MenuNav } from "./components/menus/MenuNav";
 export { HeaderGlobal } from "./components/headers/HeaderGlobal";

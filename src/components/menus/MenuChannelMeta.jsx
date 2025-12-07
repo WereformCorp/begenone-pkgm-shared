@@ -7,10 +7,7 @@ import {
   useWindowDimensions,
   View,
 } from "react-native";
-import {
-  MenuChannelMetaStyles,
-  checkDimensions,
-} from "../../styles/MenuChannelMetaStyles";
+import { MenuChannelMetaStyles } from "../../styles/MenuChannelMetaStyles";
 import { Ionicons } from "@expo/vector-icons";
 import { useEffect } from "react";
 

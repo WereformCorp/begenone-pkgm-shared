@@ -1,5 +1,4 @@
 import { Text, View } from "react-native";
-import { SelectList } from "react-native-dropdown-select-list";
 import ModalSelector from "react-native-modal-selector";
 import { useState } from "react";
 import { dropDownStyles } from "../../styles/dropDownStyles";
