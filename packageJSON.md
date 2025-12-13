@@ -1,0 +1,28 @@
+{
+"name": "@begenone/pkgm-shared",
+"version": "1.0.0",
+"private": true,
+"main": "dist/index.js",
+"scripts": {
+"build": "babel src --out-dir dist --extensions .js,.jsx"
+},
+"peerDependencies": {
+"@react-native-picker/picker": "^2.11.4",
+"react": "19.1.0",
+"react-native": "^0.81.4"
+},
+"dependencies": {
+"@expo-google-fonts/inter": "^0.4.2",
+"@expo/vector-icons": "^15.0.3",
+"expo-font": "^14.0.9",
+"react-native-dropdown-select-list": "^2.0.5",
+"react-native-modal-selector": "^2.1.2",
+"react-native-picker-select": "^9.3.1"
+},
+"devDependencies": {
+"@babel/cli": "^7.28.3",
+"@babel/core": "^7.28.5",
+"@babel/preset-env": "^7.28.5",
+"metro-react-native-babel-preset": "^0.77.0"
+}
+}

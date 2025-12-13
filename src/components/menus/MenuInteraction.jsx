@@ -1,8 +1,13 @@
 import { TouchableOpacity, View } from "react-native";
 import { MenuInteractionStyles } from "../../styles/MenuInteractionStyles";
 import { Ionicons } from "@expo/vector-icons";
+import { useState } from "react";
 
-export const MenuInteraction = ({ containerStyles, columnMainIconStyles }) => {
+export const MenuInteraction = ({
+  containerStyles,
+  columnMainIconStyles,
+  pressed,
+}) => {
   return (
     <View style={[MenuInteractionStyles.container, containerStyles]}>
       <View
@@ -39,7 +44,7 @@ export const MenuInteraction = ({ containerStyles, columnMainIconStyles }) => {
         </TouchableOpacity>
       </View>
 
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => pressed(true)}>
         <Ionicons name="ellipsis-vertical-outline" size={24} color="white" />
       </TouchableOpacity>
     </View>
