@@ -1,7 +1,11 @@
 {
   "name": "@wereform/pkgm-shared",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "main": "dist/index.js",
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "scripts": {
     "build": "babel src --out-dir dist --extensions .js,.jsx"
   },
