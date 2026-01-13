@@ -2,6 +2,22 @@ import { Text, TouchableOpacity, View } from "react-native";
 import { customizableButtonStyles } from "../../styles/customizableButtonStyles";
 import { useState } from "react";
 
+/**
+ * CustomizedButton
+ *
+ * A reusable, press-aware button component with optional icon support.
+ * Handles pressed state styling and basic prop validation.
+ *
+ * Props:
+ * - label: string (button text)
+ * - onPress: function (callback when pressed)
+ * - onPressStyle: style applied while pressed
+ * - textColor, fontSize, fontFamily, fontWeight: text customization
+ * - customIcon: optional icon rendered on the right
+ * - style: container style overrides
+ * - isDisabled: disables interaction
+ */
+
 export function CustomizedButton({
   label,
   onPress,

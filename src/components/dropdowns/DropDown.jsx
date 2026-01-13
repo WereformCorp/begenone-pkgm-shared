@@ -4,6 +4,22 @@ import { useState } from "react";
 import { dropDownStyles } from "../../styles/dropDownStyles";
 import { Ionicons } from "@expo/vector-icons";
 
+/**
+ * DropDown
+ *
+ * Wrapper around react-native-modal-selector for selecting a value
+ * from a list of options.
+ *
+ * Props:
+ * - selectText: default placeholder text
+ * - data: array of { key, label } options
+ * - styles: container style overrides
+ * - iconStyles: caret icon style overrides
+ *
+ * Internal State:
+ * - selected: currently selected option or placeholder
+ */
+
 export function DropDown({ selectText, data, styles, iconStyles }) {
   const [selected, setSelected] = useState(selectText);
   return (
