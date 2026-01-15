@@ -14,6 +14,27 @@ import { useEffect } from "react";
 let calcWidth;
 let calcHeight;
 
+/**
+ * MenuChannelMeta
+ *
+ * Displays channel-level metadata for a menu or content view.
+ * Includes publish time, channel identity, subscriber count,
+ * and a static subscribe button.
+ *
+ * Props:
+ * - timeAgo: string (e.g. "14 Hours Ago")
+ * - viewsText: string (currently unused / commented out)
+ * - channelLogo: image URL for channel avatar
+ * - userName: channel display name
+ * - subscribersCount: subscriber total
+ * - containerStyles: style overrides for root container
+ * - channelContainerStyles: reserved for future layout control
+ *
+ * Notes:
+ * - Provides safe fallbacks for missing data
+ * - Subscribe button is visual-only for now
+ */
+
 export const MenuChannelMeta = ({
   timeAgo,
   viewsText,
