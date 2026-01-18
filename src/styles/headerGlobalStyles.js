@@ -1,8 +1,9 @@
+/* Global header layout styles */
 export const headerGlobalStyles = {
   container: {
+    // Main header container
     height: 75,
     width: "100%",
-    // backgroundColor: "#fffffff",
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
@@ -10,14 +11,17 @@ export const headerGlobalStyles = {
   },
 
   iconsContainer: {
+    // Right-side icon group
     flexDirection: "row",
   },
 
   icons: {
+    // Individual icon spacing
     paddingRight: 20,
   },
 
   image: {
+    // Header logo image
     width: 120,
     height: 120,
     resizeMode: "contain",
