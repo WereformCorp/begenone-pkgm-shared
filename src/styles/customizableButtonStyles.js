@@ -1,10 +1,14 @@
 import { StyleSheet } from "react-native";
 import { globalStyles } from "./globalStyles";
 
+/* Reusable customizable button styles */
 export const customizableButtonStyles = StyleSheet.create({
-  container: {},
+  container: {
+    // Outer wrapper container
+  },
 
   buttonContainer: {
+    // Button surface container
     height: 50,
     width: "auto",
     flexGrow: 1,
@@ -15,6 +19,7 @@ export const customizableButtonStyles = StyleSheet.create({
   },
 
   buttonText: {
+    // Button label text
     flexDirection: "row",
     color: "#000",
     fontSize: 16,

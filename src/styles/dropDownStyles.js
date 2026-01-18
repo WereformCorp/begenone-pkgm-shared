@@ -1,29 +1,30 @@
 import { globalStyles } from "./globalStyles";
 
+/* Dropdown selection component styles */
 export const dropDownStyles = {
   container: {
+    // Outer dropdown wrapper
     width: "auto",
-    // marginLeft: 16,
-    // marginRight: 16,
-    // justifyContent: "start",
   },
 
   picker: {
+    // Native picker control
     height: 40,
     flex: 1,
-
-    // color: "#151515",
   },
 
   overlayStyle: {
+    // Modal overlay background
     backgroundColor: globalStyles.colors.colorPrimary50,
   },
 
   optionTextStyle: {
+    // Dropdown option text
     color: "#fff",
   },
 
   optionContainerStyle: {
+    // Dropdown option container
     backgroundColor: globalStyles.colors.colorPrimary200,
     borderWidth: 1,
     borderRadius: globalStyles.borders.borderPrimary200,
@@ -31,14 +32,15 @@ export const dropDownStyles = {
   },
 
   cancelContainerStyle: {
+    // Cancel action container
     backgroundColor: "#fff",
   },
 
   dropDownContainer: {
+    // Selected value display container
     flexDirection: "row",
     width: "100%",
     justifyContent: "space-between",
-    // borderWidth: 1,
     borderRadius: globalStyles.borders.borderPrimary200,
     height: 50,
     alignItems: "center",
@@ -48,6 +50,7 @@ export const dropDownStyles = {
   },
 
   dropDownText: {
+    // Selected value text
     color: "#fff",
     paddingLeft: 12,
   },
