@@ -1,8 +1,9 @@
+/* Interaction bar styles for menu actions */
 export const MenuInteractionStyles = {
   container: {
+    // Interaction bar container
     width: "100%",
     height: 40,
-    // backgroundColor: "#be2e2eff",
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
@@ -10,12 +11,13 @@ export const MenuInteractionStyles = {
   },
 
   column_mainIcons: {
+    // Primary interaction icons row
     flexDirection: "row",
-    // width: "100%",
     justifyContent: "space-evenly",
   },
 
   icon: {
+    // Individual icon spacing
     paddingLeft: 18,
   },
 };
