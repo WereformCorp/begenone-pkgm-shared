@@ -36,49 +36,50 @@ export const MenuInteraction = ({
       >
         <TouchableOpacity>
           <View style={MenuInteractionStyles.icon}>
-            <Ionicons name="arrow-redo" size={24} color="white" />
+            <Ionicons name="arrow-redo" size={24} color="#3b3b3b" />
           </View>
         </TouchableOpacity>
 
         <TouchableOpacity>
           <View style={MenuInteractionStyles.icon}>
-            <Ionicons name="chatbubble-ellipses" size={24} color="white" />
+            <Ionicons name="chatbubble-ellipses" size={24} color="#3b3b3b" />
           </View>
         </TouchableOpacity>
 
         <TouchableOpacity>
           <View style={MenuInteractionStyles.icon}>
-            <Ionicons name="repeat-outline" size={24} color="white" />
+            <Ionicons name="repeat-outline" size={24} color="#3b3b3b" />
           </View>
         </TouchableOpacity>
 
         <TouchableOpacity>
           <View style={MenuInteractionStyles.icon}>
-            <Ionicons name="thumbs-up-outline" size={24} color="white" />
+            <Ionicons name="thumbs-up-outline" size={24} color="#3b3b3b" />
           </View>
         </TouchableOpacity>
 
         <TouchableOpacity>
           <View style={MenuInteractionStyles.icon}>
-            <Ionicons name="thumbs-down-outline" size={24} color="white" />
+            <Ionicons name="thumbs-down-outline" size={24} color="#3b3b3b" />
           </View>
         </TouchableOpacity>
       </View> */}
 
-      <TouchableOpacity
-        onPress={() => {
-          setOpen(!open);
-          pressed?.(true);
-        }}
-      >
-        <Ionicons name="ellipsis-vertical-outline" size={24} color="white" />
-      </TouchableOpacity>
-
-      {open && canDelete && (
+      {canDelete && (
+        <TouchableOpacity
+          onPress={() => {
+            setOpen(!open);
+            pressed?.(true);
+          }}
+        >
+          <Ionicons name="ellipsis-vertical-outline" size={24} color="white" />
+        </TouchableOpacity>
+      )}
+      {open && (
         <View style={MenuInteractionStyles2.menu}>
           <TouchableOpacity
             onPress={() => {
-              setOpen(false);
+              setOpen(!open);
               onDelete();
             }}
           >
