@@ -1,4 +1,9 @@
-import { Text, TouchableOpacity, View } from "react-native";
+import {
+  Text,
+  TouchableOpacity,
+  View,
+  useWindowDimensions,
+} from "react-native";
 import { MenuInteractionStyles } from "../../styles/MenuInteractionStyles";
 import { Ionicons } from "@expo/vector-icons";
 import { useState } from "react";
@@ -28,42 +33,46 @@ export const MenuInteraction = ({
   onDelete,
 }) => {
   const [open, setOpen] = useState(false);
+  const { width } = useWindowDimensions();
+
+  // Scales with screen width: ~22 on a 375pt phone, ~26 on a 430pt phone
+  const iconSize = Math.round(width * 0.06);
 
   return (
     <View style={[MenuInteractionStyles.container, containerStyles]}>
-      {/* <View
+      <View
         style={[MenuInteractionStyles.column_mainIcons, columnMainIconStyles]}
       >
         <TouchableOpacity>
           <View style={MenuInteractionStyles.icon}>
-            <Ionicons name="arrow-redo" size={24} color="#3b3b3b" />
+            <Ionicons name="thumbs-up-outline" size={iconSize} color="#fff" />
           </View>
         </TouchableOpacity>
 
         <TouchableOpacity>
           <View style={MenuInteractionStyles.icon}>
-            <Ionicons name="chatbubble-ellipses" size={24} color="#3b3b3b" />
+            <Ionicons name="thumbs-down-outline" size={iconSize} color="#fff" />
           </View>
         </TouchableOpacity>
 
         <TouchableOpacity>
           <View style={MenuInteractionStyles.icon}>
-            <Ionicons name="repeat-outline" size={24} color="#3b3b3b" />
+            <Ionicons name="arrow-redo" size={iconSize} color="#fff" />
           </View>
         </TouchableOpacity>
 
         <TouchableOpacity>
           <View style={MenuInteractionStyles.icon}>
-            <Ionicons name="thumbs-up-outline" size={24} color="#3b3b3b" />
+            <Ionicons name="chatbubble-ellipses" size={iconSize} color="#fff" />
           </View>
         </TouchableOpacity>
 
         <TouchableOpacity>
           <View style={MenuInteractionStyles.icon}>
-            <Ionicons name="thumbs-down-outline" size={24} color="#3b3b3b" />
+            <Ionicons name="repeat-outline" size={iconSize} color="#fff" />
           </View>
         </TouchableOpacity>
-      </View> */}
+      </View>
 
       {canDelete && (
         <TouchableOpacity
@@ -72,48 +81,25 @@ export const MenuInteraction = ({
             pressed?.(true);
           }}
         >
-          <Ionicons name="ellipsis-vertical-outline" size={24} color="white" />
+          <Ionicons
+            name="ellipsis-vertical-outline"
+            size={iconSize}
+            color="white"
+          />
         </TouchableOpacity>
       )}
       {open && (
-        <View style={MenuInteractionStyles2.menu}>
+        <View style={MenuInteractionStyles.menu}>
           <TouchableOpacity
             onPress={() => {
               setOpen(!open);
               onDelete();
             }}
           >
-            <Text style={MenuInteractionStyles2.deleteText}>Delete</Text>
+            <Text style={MenuInteractionStyles.deleteText}>Delete</Text>
           </TouchableOpacity>
         </View>
       )}
     </View>
   );
 };
-
-export const MenuInteractionStyles2 = StyleSheet.create({
-  menu: {
-    position: "absolute",
-    top: 28, // below the ellipsis
-    right: 0,
-    backgroundColor: "#1c1c1e", // dark neutral
-    borderRadius: 8,
-    paddingVertical: 8,
-    paddingHorizontal: 12,
-    minWidth: 120,
-
-    // subtle elevation
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.25,
-    shadowRadius: 6,
-    elevation: 6,
-  },
-
-  deleteText: {
-    color: "#ff4d4f", // destructive red
-    fontSize: 15,
-    fontWeight: "600",
-    textAlign: "center",
-  },
-});
