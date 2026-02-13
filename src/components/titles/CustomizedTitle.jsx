@@ -1,62 +1,88 @@
-import { Text, View } from "react-native";
+import { Pressable, Text, View } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import { useState } from "react";
+import { CustomizedTitleStyles } from "../../styles/CustomizedTitleStyles";
 
 /**
  * CustomizedTitle
  *
- * Reusable title-rendering component with built-in truncation
- * and flexible typography control.
- *
- * Behavior:
- * - Automatically truncates long titles to 75 characters
- * - Appends an ellipsis (…) when truncation occurs
- * - Falls back to a default title when no title is provided
- * - Limits rendering to two lines for layout stability
+ * Modern, minimalist, bold title for Begenone.
+ * Max 2 lines; 3-dot icon underneath when description exists.
+ * Tap title/dots to expand description; "Show less" to collapse.
+ * Description uses a card-style container inspired by YouTube/Medium dark UIs.
  *
  * Props:
  * - title: string (raw title text)
+ * - description: string (optional; expandable content)
  * - fontSize: number (text size override)
  * - fontFamily: string (font family override)
  * - textColor: string (text color override)
  * - style: ViewStyle (outer container style override)
  * - textStyle: TextStyle (text style override)
- * - dateTextStyles: reserved for future extensions
- *
- * Notes:
- * - Designed for feed cards, headers, and compact layouts
- * - Uses flexShrink and wrapping to avoid layout overflow
  */
 
 export function CustomizedTitle({
   title,
-  fontSize,
-  fontFamily,
-  textColor,
+  description,
+  fontSize = 18,
+  fontFamily = "System",
+  textColor = "#fff",
   style,
   textStyle,
-  dateTextStyles,
 }) {
-  const displayTitle =
-    title && title.length > 75
-      ? title.slice(0, 75) + "…" // adds an ellipsis when truncated
-      : title || "Here is your default Title!";
+  const [expanded, setExpanded] = useState(false);
+  const displayTitle = title || "Untitled";
+  const displayDescription =
+    description || "Watch to discover more about this video and the creator.";
+  const hasDescription = true;
 
   return (
-    <View style={[{ width: "100%" }, style]}>
-      <Text
-        style={[
-          {
-            flexShrink: 1,
-            fontFamily: fontFamily,
-            fontSize: fontSize,
-            color: textColor,
-            flexWrap: "wrap",
-          },
-          textStyle,
+    <View style={[CustomizedTitleStyles.container, style]}>
+      <Pressable
+        onPress={() => hasDescription && setExpanded(true)}
+        style={({ pressed }) => [
+          hasDescription && { opacity: pressed ? 0.8 : 1 },
         ]}
-        numberOfLines={2}
       >
-        {displayTitle}
-      </Text>
+        <Text
+          style={[
+            CustomizedTitleStyles.title,
+            {
+              fontFamily,
+              fontSize,
+              color: textColor,
+              lineHeight: fontSize * 1.35,
+            },
+            textStyle,
+          ]}
+          numberOfLines={2}
+          ellipsizeMode="tail"
+        >
+          {displayTitle}
+        </Text>
+        {hasDescription && (
+          <View style={CustomizedTitleStyles.dotsContainer}>
+            <Ionicons name="ellipsis-horizontal" size={20} color={textColor} />
+          </View>
+        )}
+      </Pressable>
+
+      {hasDescription && expanded && (
+        <View style={CustomizedTitleStyles.description}>
+          <Text style={[CustomizedTitleStyles.descriptionText, { fontFamily }]}>
+            {displayDescription}
+          </Text>
+          <Pressable
+            onPress={() => setExpanded(false)}
+            style={({ pressed }) => [
+              CustomizedTitleStyles.showLess,
+              { opacity: pressed ? 0.7 : 1 },
+            ]}
+          >
+            <Text style={CustomizedTitleStyles.showLessText}>Show less</Text>
+          </Pressable>
+        </View>
+      )}
     </View>
   );
 }
