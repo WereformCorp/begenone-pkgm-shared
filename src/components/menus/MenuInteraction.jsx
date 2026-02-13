@@ -1,13 +1,13 @@
 import {
+  Pressable,
+  ScrollView,
   Text,
   TouchableOpacity,
   View,
-  useWindowDimensions,
 } from "react-native";
 import { MenuInteractionStyles } from "../../styles/MenuInteractionStyles";
 import { Ionicons } from "@expo/vector-icons";
-import { useState } from "react";
-import { StyleSheet } from "react-native";
+import { useEffect, useState } from "react";
 
 /**
  * MenuInteraction
@@ -31,62 +31,138 @@ export const MenuInteraction = ({
   pressed,
   canDelete,
   onDelete,
+  initialLiked = false,
+  initialDisliked = false,
+  likesCount = 0,
+  dislikesCount = 0,
+  onLike,
+  onDislike,
+  onShare,
+  onComment,
+  onRepost,
+  variant = "default",
+  showMenuButton = false,
+  onMenuPress,
 }) => {
+  const isMinimal = variant === "minimal";
   const [open, setOpen] = useState(false);
-  const { width } = useWindowDimensions();
+  const [liked, setLiked] = useState(initialLiked);
+  const [disliked, setDisliked] = useState(initialDisliked);
 
-  // Scales with screen width: ~22 on a 375pt phone, ~26 on a 430pt phone
-  const iconSize = Math.round(width * 0.06);
+  // Re-sync to server-authoritative state whenever video data is refetched
+  useEffect(() => {
+    setLiked(initialLiked);
+  }, [initialLiked]);
+
+  useEffect(() => {
+    setDisliked(initialDisliked);
+  }, [initialDisliked]);
+  const iconSize = 22;
+
+  function handleLike() {
+    const wasLiked = liked;
+    setLiked(!wasLiked);
+    if (disliked) setDisliked(false); // mutual exclusion
+    onLike?.();
+  }
+
+  function handleDislike() {
+    const wasDisliked = disliked;
+    setDisliked(!wasDisliked);
+    if (liked) setLiked(false); // mutual exclusion
+    onDislike?.();
+  }
+
+  const chipLikeStyle = liked
+    ? (isMinimal ? MenuInteractionStyles.chipLikedMinimal : MenuInteractionStyles.engagementChipLiked)
+    : (isMinimal ? MenuInteractionStyles.chipNeutralMinimal : MenuInteractionStyles.engagementChipNeutral);
+  const chipDislikeStyle = disliked
+    ? (isMinimal ? MenuInteractionStyles.chipDislikedMinimal : MenuInteractionStyles.engagementChipDisliked)
+    : (isMinimal ? MenuInteractionStyles.chipNeutralMinimal : MenuInteractionStyles.engagementChipNeutral);
+
+  const reactiveStyle = ({ pressed }) =>
+    isMinimal
+      ? { opacity: pressed ? 0.7 : 1 }
+      : { opacity: pressed ? 0.85 : 1, transform: [{ scale: pressed ? 0.94 : 1 }] };
+
+  const iconStyle = isMinimal ? MenuInteractionStyles.iconMinimal : MenuInteractionStyles.icon;
+  const chipStyle = isMinimal ? MenuInteractionStyles.chipMinimal : MenuInteractionStyles.engagementChip;
+
+  const showDots = canDelete || showMenuButton;
 
   return (
     <View style={[MenuInteractionStyles.container, containerStyles]}>
-      <View
-        style={[MenuInteractionStyles.column_mainIcons, columnMainIconStyles]}
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={MenuInteractionStyles.scrollRow}
+        style={{ flex: 1 }}
       >
-        <TouchableOpacity>
-          <View style={MenuInteractionStyles.icon}>
-            <Ionicons name="thumbs-up-outline" size={iconSize} color="#fff" />
-          </View>
-        </TouchableOpacity>
-
-        <TouchableOpacity>
-          <View style={MenuInteractionStyles.icon}>
-            <Ionicons name="thumbs-down-outline" size={iconSize} color="#fff" />
-          </View>
-        </TouchableOpacity>
-
-        <TouchableOpacity>
-          <View style={MenuInteractionStyles.icon}>
-            <Ionicons name="arrow-redo" size={iconSize} color="#fff" />
-          </View>
-        </TouchableOpacity>
-
-        <TouchableOpacity>
-          <View style={MenuInteractionStyles.icon}>
-            <Ionicons name="chatbubble-ellipses" size={iconSize} color="#fff" />
-          </View>
-        </TouchableOpacity>
-
-        <TouchableOpacity>
-          <View style={MenuInteractionStyles.icon}>
-            <Ionicons name="repeat-outline" size={iconSize} color="#fff" />
-          </View>
-        </TouchableOpacity>
-      </View>
-
-      {canDelete && (
-        <TouchableOpacity
-          onPress={() => {
-            setOpen(!open);
-            pressed?.(true);
-          }}
+        <View
+          style={[MenuInteractionStyles.column_mainIcons, columnMainIconStyles]}
         >
-          <Ionicons
-            name="ellipsis-vertical-outline"
-            size={iconSize}
-            color="white"
-          />
-        </TouchableOpacity>
+          <Pressable onPress={handleLike} style={reactiveStyle}>
+            <View style={[chipStyle, chipLikeStyle]}>
+              <Ionicons
+                name={liked ? "thumbs-up" : "thumbs-up-outline"}
+                size={iconSize}
+                color={liked ? "#60a5fa" : "#e4e4e7"}
+              />
+              <Text style={MenuInteractionStyles.countText}>{likesCount}</Text>
+            </View>
+          </Pressable>
+
+          <Pressable onPress={handleDislike} style={reactiveStyle}>
+            <View style={[chipStyle, chipDislikeStyle]}>
+              <Ionicons
+                name={disliked ? "thumbs-down" : "thumbs-down-outline"}
+                size={iconSize}
+                color={disliked ? "#ff5e00" : "#e4e4e7"}
+              />
+              <Text style={MenuInteractionStyles.countText}>{dislikesCount}</Text>
+            </View>
+          </Pressable>
+
+          <Pressable onPress={() => onShare?.()} style={reactiveStyle}>
+            <View style={iconStyle}>
+              <Ionicons name="arrow-redo" size={iconSize} color="#e4e4e7" />
+            </View>
+          </Pressable>
+
+          <Pressable onPress={() => onComment?.()} style={reactiveStyle}>
+            <View style={iconStyle}>
+              <Ionicons name="chatbubble-ellipses" size={iconSize} color="#e4e4e7" />
+            </View>
+          </Pressable>
+
+          <Pressable onPress={() => onRepost?.()} style={reactiveStyle}>
+            <View style={iconStyle}>
+              <Ionicons name="repeat-outline" size={iconSize} color="#e4e4e7" />
+            </View>
+          </Pressable>
+        </View>
+      </ScrollView>
+
+      {showDots && (
+        <Pressable
+          onPress={() => {
+            if (canDelete) {
+              setOpen(!open);
+              pressed?.(true);
+            } else {
+              onMenuPress?.();
+            }
+          }}
+          style={reactiveStyle}
+        >
+          <View style={iconStyle}>
+            <Ionicons
+              name="ellipsis-vertical-outline"
+              size={iconSize}
+              color="#e4e4e7"
+            />
+          </View>
+        </Pressable>
       )}
       {open && (
         <View style={MenuInteractionStyles.menu}>
