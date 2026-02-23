@@ -1,0 +1,35 @@
+sequenceDiagram
+    autonumber
+    participant Parent
+    participant Menu as MenuInteraction
+    participant CommentSheet as CommentBottomSheet (optional)
+
+    Parent->>Menu: props (onLike, onDislike, onShare, onComment, onRepost, commentSheetVisible, onCloseCommentSheet, comments, ...)
+
+    User->>Menu: tap Like
+    Menu->>Menu: handleLike() — setLiked, clear disliked
+    Menu->>Parent: onLike()
+
+    User->>Menu: tap Dislike
+    Menu->>Menu: handleDislike()
+    Menu->>Parent: onDislike()
+
+    User->>Menu: tap Share
+    Menu->>Parent: onShare()
+
+    User->>Menu: tap Comment
+    Menu->>Parent: onComment()
+    Note right of Parent: Parent sets commentSheetVisible=true
+    Parent->>CommentSheet: visible=true
+    CommentSheet->>User: display sheet
+
+    User->>Menu: tap Repost
+    Menu->>Parent: onRepost()
+
+    User->>Menu: tap ellipsis (menu)
+    alt canDelete
+        Menu->>Menu: setOpen(true)
+        Menu->>Parent: pressed(true)
+    else showMenuButton
+        Menu->>Parent: onMenuPress()
+    end
