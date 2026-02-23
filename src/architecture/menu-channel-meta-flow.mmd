@@ -1,0 +1,12 @@
+sequenceDiagram
+    autonumber
+    participant Parent
+    participant Meta as MenuChannelMeta
+
+    Parent->>Meta: props (channelLogo, userName, timeAgo, viewsText, subscribersCount, onChannelPress, compact, dateOnRight, tight)
+
+    Meta->>Meta: render calendar, views, avatar, name, subs, (optional subscribe/bell)
+    User->>Meta: tap avatar / channel name
+    Meta->>Parent: onChannelPress()
+
+    Note over Meta: Subscribe/bell state is local unless parent wires callbacks

@@ -1,0 +1,13 @@
+sequenceDiagram
+    autonumber
+    participant Caller
+    participant normalizeUrl as normalizeUrl (pkgm-shared)
+
+    Caller->>normalizeUrl: normalizeUrl(value)
+    alt value is falsy
+        normalizeUrl-->>Caller: null
+    else value already absolute (http/https)
+        normalizeUrl-->>Caller: str (trimmed)
+    else relative
+        normalizeUrl-->>Caller: `${domain}/${encodeURIComponent(str)}`
+    end
