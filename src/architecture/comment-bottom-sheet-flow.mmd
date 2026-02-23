@@ -1,0 +1,21 @@
+sequenceDiagram
+    autonumber
+    participant Parent as Parent (e.g. VideoPlayingScreen)
+    participant Sheet as CommentBottomSheet
+    participant FlatList as FlatList
+    participant Input as TextInput + Post
+
+    Parent->>Sheet: visible=true, comments, onSubmitComment, renderCommentItem, onClose
+
+    Sheet->>Sheet: openSheet() — Animated translateY, backdropOpacity
+    Sheet->>FlatList: render comments (renderCommentItem or default row)
+    Sheet->>Input: render emoji + TextInput + Post (if onSubmitComment provided)
+
+    User->>Sheet: tap backdrop or close icon
+    Sheet->>Sheet: closeSheet() — animate out
+    Sheet->>Parent: onClose()
+
+    User->>Input: type comment, tap Post
+    Input->>Sheet: handlePost() — trim text
+    Sheet->>Parent: onSubmitComment(trimmed)
+    Sheet->>Sheet: setCommentText("")

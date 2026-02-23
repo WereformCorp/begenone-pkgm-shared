@@ -16,16 +16,14 @@ export function DateViews({
         <View style={[styles.dateIcon]}>
           <Ionicons name="calendar-clear-outline" size={16} color="white" />
         </View>
-        <Text style={[styles.dateText, dateTextStyles]}>
-          {timeAgo || "14 Hours Ago"}
-        </Text>
+        <Text style={[styles.dateText, dateTextStyles]}>{timeAgo}</Text>
       </View>
       <View style={styles.viewsContainer}>
         <View style={[styles.eyeIcon]}>
           <Ionicons name="eye-outline" size={16} color="white" />
         </View>
         <Text style={[styles.viewsText, viewsTextStyles]}>
-          {viewsText || "123.400"}
+          {viewsText}
           <Text style={{ color: "white" }}>{" Views"}</Text>
         </Text>
       </View>

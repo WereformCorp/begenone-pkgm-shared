@@ -31,8 +31,10 @@ function MenuChannelMetaComponent({
   showNotificationBell = true,
   showMenuButton = false,
   onMenuPress,
+  onChannelPress,
   cardHeight,
   hideCardBorder = false,
+  compact = false,
 }) {
   const [isSubscribed, setSubscribed] = useState(false);
   const [notificationsEnabled, setNotificationsEnabled] = useState(false);
@@ -101,10 +103,24 @@ function MenuChannelMetaComponent({
       ? "Subscriber"
       : "Subscribers";
 
+  const avatarSize = compact ? 32 : 52;
+  const avatarWrapperStyle = compact
+    ? [
+        S.avatarWrapper,
+        {
+          width: avatarSize,
+          height: avatarSize,
+          borderRadius: avatarSize / 2,
+          marginRight: 10,
+        },
+      ]
+    : S.avatarWrapper;
+
   return (
     <Animated.View
       style={[
         S.container,
+        compact && { marginHorizontal: 0, marginVertical: 4 },
         containerStyles,
         {
           opacity: entranceAnim,
@@ -122,27 +138,31 @@ function MenuChannelMetaComponent({
       <View
         style={[
           S.card,
-          cardHeight != null && { minHeight: cardHeight, height: cardHeight },
+          cardHeight != null &&
+            !compact && { minHeight: cardHeight, height: cardHeight },
           hideCardBorder && S.cardNoBorder,
+          compact && { padding: 10, minHeight: undefined },
           customCardStyles,
         ]}
       >
-        <View style={S.metaRow}>
-          <View style={S.metaIcon}>{CalendarIcon}</View>
-          <Text style={S.metaText}>{timeAgo || "Recently"}</Text>
-          {viewsText != null && (
-            <>
-              <View style={S.metaIconSpaced}>{EyeIcon}</View>
-              <Text style={S.metaText}>{viewsText}</Text>
-            </>
-          )}
-        </View>
+        {!compact && (
+          <View style={S.metaRow}>
+            <View style={S.metaIcon}>{CalendarIcon}</View>
+            <Text style={S.metaText}>{timeAgo || "Recently"}</Text>
+            {viewsText != null && (
+              <>
+                <View style={S.metaIconSpaced}>{EyeIcon}</View>
+                <Text style={S.metaText}>{viewsText}</Text>
+              </>
+            )}
+          </View>
+        )}
 
         <View style={S.channelRow}>
-          <Pressable onPress={animatePress(avatarScale)}>
+          <Pressable onPress={animatePress(avatarScale, onChannelPress)}>
             <Animated.View
               style={[
-                S.avatarWrapper,
+                avatarWrapperStyle,
                 {
                   transform: [{ scale: avatarScale }],
                 },
@@ -156,14 +176,26 @@ function MenuChannelMetaComponent({
             </Animated.View>
           </Pressable>
 
-          <View style={S.identityColumn}>
-            <Text style={S.channelName} numberOfLines={1}>
+          <Pressable
+            style={S.identityColumn}
+            onPress={onChannelPress}
+            disabled={!onChannelPress}
+          >
+            <Text
+              style={[S.channelName, compact && { fontSize: 14 }]}
+              numberOfLines={1}
+            >
               {userName || "Channel"}
             </Text>
-            <Text style={S.subscriberLabel}>
-              {subCount} {subLabel}
-            </Text>
-          </View>
+            {!compact && (
+              <Text style={S.subscriberLabel}>
+                {subCount} {subLabel}
+              </Text>
+            )}
+            {compact && timeAgo && (
+              <Text style={[S.metaText, { marginTop: 2 }]}>{timeAgo}</Text>
+            )}
+          </Pressable>
 
           {(showMenuButton || showSubscribe || showNotificationBell) && (
             <View style={S.actionsRow}>

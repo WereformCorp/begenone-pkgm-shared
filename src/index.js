@@ -2,6 +2,7 @@ export { InputField } from "./components/inputs/InputField";
 export { MenuNav } from "./components/menus/MenuNav";
 export { HeaderGlobal } from "./components/headers/HeaderGlobal";
 export { MenuInteraction } from "./components/menus/MenuInteraction";
+export { CommentBottomSheet } from "./components/CommentBottomSheet";
 export { MenuChannelMeta } from "./components/menus/MenuChannelMeta";
 export { InputComment } from "./components/inputs/InputComment";
 export { DropDown } from "./components/dropdowns/DropDown";

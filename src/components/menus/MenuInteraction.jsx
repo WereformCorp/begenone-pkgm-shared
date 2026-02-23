@@ -8,6 +8,7 @@ import {
 import { MenuInteractionStyles } from "../../styles/MenuInteractionStyles";
 import { Ionicons } from "@expo/vector-icons";
 import { useEffect, useState } from "react";
+import { CommentBottomSheet } from "../CommentBottomSheet";
 
 /**
  * MenuInteraction
@@ -15,10 +16,17 @@ import { useEffect, useState } from "react";
  * Renders the primary interaction controls for a post or wire.
  * Includes share, comment, repost, like, dislike recognized actions.
  *
+ * Optional comment sheet: when commentSheetVisible + onCloseCommentSheet
+ * (and optionally comments) are passed, tapping comment opens the sheet.
+ *
  * Props:
  * - containerStyles: override styles for root container
  * - columnMainIconStyles: override styles for icon column
  * - pressed: callback to trigger overflow / context menu
+ * - commentSheetVisible: (optional) controls comment bottom sheet
+ * - onCloseCommentSheet: (optional) called when sheet closes
+ * - comments: (optional) array of { id, text, authorName, timeAgo }
+ * - commentsLoading: (optional) loading state for comments
  *
  * Notes:
  * - Icons are presentation-only
@@ -43,6 +51,12 @@ export const MenuInteraction = ({
   variant = "default",
   showMenuButton = false,
   onMenuPress,
+  commentSheetVisible,
+  onCloseCommentSheet,
+  comments = [],
+  commentsLoading = false,
+  onSubmitComment,
+  renderCommentItem,
 }) => {
   const isMinimal = variant === "minimal";
   const [open, setOpen] = useState(false);
@@ -74,19 +88,34 @@ export const MenuInteraction = ({
   }
 
   const chipLikeStyle = liked
-    ? (isMinimal ? MenuInteractionStyles.chipLikedMinimal : MenuInteractionStyles.engagementChipLiked)
-    : (isMinimal ? MenuInteractionStyles.chipNeutralMinimal : MenuInteractionStyles.engagementChipNeutral);
+    ? isMinimal
+      ? MenuInteractionStyles.chipLikedMinimal
+      : MenuInteractionStyles.engagementChipLiked
+    : isMinimal
+      ? MenuInteractionStyles.chipNeutralMinimal
+      : MenuInteractionStyles.engagementChipNeutral;
   const chipDislikeStyle = disliked
-    ? (isMinimal ? MenuInteractionStyles.chipDislikedMinimal : MenuInteractionStyles.engagementChipDisliked)
-    : (isMinimal ? MenuInteractionStyles.chipNeutralMinimal : MenuInteractionStyles.engagementChipNeutral);
+    ? isMinimal
+      ? MenuInteractionStyles.chipDislikedMinimal
+      : MenuInteractionStyles.engagementChipDisliked
+    : isMinimal
+      ? MenuInteractionStyles.chipNeutralMinimal
+      : MenuInteractionStyles.engagementChipNeutral;
 
   const reactiveStyle = ({ pressed }) =>
     isMinimal
       ? { opacity: pressed ? 0.7 : 1 }
-      : { opacity: pressed ? 0.85 : 1, transform: [{ scale: pressed ? 0.94 : 1 }] };
+      : {
+          opacity: pressed ? 0.85 : 1,
+          transform: [{ scale: pressed ? 0.94 : 1 }],
+        };
 
-  const iconStyle = isMinimal ? MenuInteractionStyles.iconMinimal : MenuInteractionStyles.icon;
-  const chipStyle = isMinimal ? MenuInteractionStyles.chipMinimal : MenuInteractionStyles.engagementChip;
+  const iconStyle = isMinimal
+    ? MenuInteractionStyles.iconMinimal
+    : MenuInteractionStyles.icon;
+  const chipStyle = isMinimal
+    ? MenuInteractionStyles.chipMinimal
+    : MenuInteractionStyles.engagementChip;
 
   const showDots = canDelete || showMenuButton;
 
@@ -119,7 +148,9 @@ export const MenuInteraction = ({
                 size={iconSize}
                 color={disliked ? "#ff5e00" : "#e4e4e7"}
               />
-              <Text style={MenuInteractionStyles.countText}>{dislikesCount}</Text>
+              <Text style={MenuInteractionStyles.countText}>
+                {dislikesCount}
+              </Text>
             </View>
           </Pressable>
 
@@ -129,9 +160,18 @@ export const MenuInteraction = ({
             </View>
           </Pressable>
 
-          <Pressable onPress={() => onComment?.()} style={reactiveStyle}>
+          <Pressable
+            onPress={() => {
+              onComment?.();
+            }}
+            style={reactiveStyle}
+          >
             <View style={iconStyle}>
-              <Ionicons name="chatbubble-ellipses" size={iconSize} color="#e4e4e7" />
+              <Ionicons
+                name="chatbubble-ellipses"
+                size={iconSize}
+                color="#e4e4e7"
+              />
             </View>
           </Pressable>
 
@@ -176,6 +216,18 @@ export const MenuInteraction = ({
           </TouchableOpacity>
         </View>
       )}
+
+      {typeof commentSheetVisible === "boolean" &&
+        typeof onCloseCommentSheet === "function" && (
+          <CommentBottomSheet
+            visible={commentSheetVisible}
+            onClose={onCloseCommentSheet}
+            comments={comments}
+            loading={commentsLoading}
+            onSubmitComment={onSubmitComment}
+            renderCommentItem={renderCommentItem}
+          />
+        )}
     </View>
   );
 };

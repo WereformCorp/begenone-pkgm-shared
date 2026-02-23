@@ -1,0 +1,111 @@
+%% begenone-pkgm-shared — Sequence Diagrams
+%% Mermaid.js format (.mmd) — use --- to separate multiple diagrams
+%% Shared components consumed by pkgm-video, pkgm-wire, pkgm-settings, pkgm-channel, App
+
+%% 1. COMMENT BOTTOM SHEET — Open, list, post, close flow
+sequenceDiagram
+    autonumber
+    participant Parent as Parent (e.g. VideoPlayingScreen)
+    participant Sheet as CommentBottomSheet
+    participant FlatList as FlatList
+    participant Input as TextInput + Post
+
+    Parent->>Sheet: visible=true, comments, onSubmitComment, renderCommentItem, onClose
+
+    Sheet->>Sheet: openSheet() — Animated translateY, backdropOpacity
+    Sheet->>FlatList: render comments (renderCommentItem or default row)
+    Sheet->>Input: render emoji + TextInput + Post (if onSubmitComment provided)
+
+    User->>Sheet: tap backdrop or close icon
+    Sheet->>Sheet: closeSheet() — animate out
+    Sheet->>Parent: onClose()
+
+    User->>Input: type comment, tap Post
+    Input->>Sheet: handlePost() — trim text
+    Sheet->>Parent: onSubmitComment(trimmed)
+    Sheet->>Sheet: setCommentText("")
+
+---
+%% 2. MENU INTERACTION — Like, dislike, share, comment, repost, menu
+sequenceDiagram
+    autonumber
+    participant Parent
+    participant Menu as MenuInteraction
+    participant CommentSheet as CommentBottomSheet (optional)
+
+    Parent->>Menu: props (onLike, onDislike, onShare, onComment, onRepost, commentSheetVisible, onCloseCommentSheet, comments, ...)
+
+    User->>Menu: tap Like
+    Menu->>Menu: handleLike() — setLiked, clear disliked
+    Menu->>Parent: onLike()
+
+    User->>Menu: tap Dislike
+    Menu->>Menu: handleDislike()
+    Menu->>Parent: onDislike()
+
+    User->>Menu: tap Share
+    Menu->>Parent: onShare()
+
+    User->>Menu: tap Comment
+    Menu->>Parent: onComment()
+    Note right of Parent: Parent sets commentSheetVisible=true
+    Parent->>CommentSheet: visible=true
+    CommentSheet->>User: display sheet
+
+    User->>Menu: tap Repost
+    Menu->>Parent: onRepost()
+
+    User->>Menu: tap ellipsis (menu)
+    alt canDelete
+        Menu->>Menu: setOpen(true)
+        Menu->>Parent: pressed(true)
+    else showMenuButton
+        Menu->>Parent: onMenuPress()
+    end
+
+---
+%% 3. INPUT FIELD & CUSTOMIZED BUTTON — Generic form flow
+sequenceDiagram
+    autonumber
+    participant Parent
+    participant InputField as InputField
+    participant CustomButton as CustomizedButton
+
+    Parent->>InputField: props (value, onChangeText, placeholder, multiline, inputStyle, inputWrapper)
+    User->>InputField: type text
+    InputField->>Parent: onChangeText(text)
+
+    Parent->>CustomButton: props (label, onPress, textColor, style)
+    User->>CustomButton: tap
+    CustomButton->>Parent: onPress()
+
+---
+%% 4. MENU CHANNEL META — Presentation (subscribe/bell when used in channel context)
+sequenceDiagram
+    autonumber
+    participant Parent
+    participant Meta as MenuChannelMeta
+
+    Parent->>Meta: props (channelLogo, userName, timeAgo, viewsText, subscribersCount, onChannelPress, compact, dateOnRight, tight)
+
+    Meta->>Meta: render calendar, views, avatar, name, subs, (optional subscribe/bell)
+    User->>Meta: tap avatar / channel name
+    Meta->>Parent: onChannelPress()
+
+    Note over Meta: Subscribe/bell state is local unless parent wires callbacks
+
+---
+%% 5. NORMALIZE URL — Utility used by ChannelAboutLayout etc.
+sequenceDiagram
+    autonumber
+    participant Caller
+    participant normalizeUrl as normalizeUrl (pkgm-shared)
+
+    Caller->>normalizeUrl: normalizeUrl(value)
+    alt value is falsy
+        normalizeUrl-->>Caller: null
+    else value already absolute (http/https)
+        normalizeUrl-->>Caller: str (trimmed)
+    else relative
+        normalizeUrl-->>Caller: `${domain}/${encodeURIComponent(str)}`
+    end

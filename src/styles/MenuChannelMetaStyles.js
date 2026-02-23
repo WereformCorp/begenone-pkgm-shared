@@ -21,7 +21,7 @@ export const MenuChannelMetaStyles = StyleSheet.create({
 
   card: {
     backgroundColor: COLORS.bgRaised,
-    borderRadius: 18,
+    // borderRadius: 18,
     padding: 16,
     borderWidth: 1,
     borderColor: "rgba(255,255,255,0.04)",
