@@ -2,6 +2,7 @@ import { Animated, Image, Pressable, Text, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { memo, useCallback, useEffect, useRef, useState } from "react";
 import { MenuChannelMetaStyles as S } from "../../styles/MenuChannelMetaStyles";
+import { ChannelSubscribeButton } from "./ChannelSubscribeButton";
 
 const PRESS_SCALE = 0.94;
 const ENTRANCE_DURATION = 400;
@@ -35,13 +36,21 @@ function MenuChannelMetaComponent({
   cardHeight,
   hideCardBorder = false,
   compact = false,
+  /** When set, subscribe UI mirrors web ChannelLayout (controlled by parent). */
+  isSubscribed: isSubscribedProp,
+  canSubscribe = true,
+  subscribePending = false,
+  onToggleSubscribe,
 }) {
-  const [isSubscribed, setSubscribed] = useState(false);
+  const subscribeControlled = typeof onToggleSubscribe === "function";
+  const [internalSubscribed, setInternalSubscribed] = useState(false);
+  const isSubscribed = subscribeControlled
+    ? Boolean(isSubscribedProp)
+    : internalSubscribed;
   const [notificationsEnabled, setNotificationsEnabled] = useState(false);
 
   const entranceAnim = useRef(new Animated.Value(0)).current;
   const avatarScale = useRef(new Animated.Value(1)).current;
-  const subScale = useRef(new Animated.Value(1)).current;
   const bellScale = useRef(new Animated.Value(1)).current;
 
   useEffect(() => {
@@ -71,8 +80,18 @@ function MenuChannelMetaComponent({
   }, []);
 
   const handleSubscribe = useCallback(() => {
-    setSubscribed(prev => !prev);
-  }, []);
+    if (subscribeControlled) {
+      if (!canSubscribe || subscribePending) return;
+      onToggleSubscribe();
+      return;
+    }
+    setInternalSubscribed(prev => !prev);
+  }, [
+    subscribeControlled,
+    canSubscribe,
+    subscribePending,
+    onToggleSubscribe,
+  ]);
 
   const handleBell = useCallback(() => {
     setNotificationsEnabled(prev => !prev);
@@ -240,36 +259,14 @@ function MenuChannelMetaComponent({
                     </Pressable>
                   )}
 
-                  {showSubscribe && (
-                    <Pressable
-                      onPress={animatePress(subScale, handleSubscribe)}
-                    >
-                      <Animated.View
-                        style={[
-                          S.subscribeButton,
-                          isSubscribed
-                            ? S.subscribeButtonSub
-                            : S.subscribeButtonUnsub,
-                          { transform: [{ scale: subScale }] },
-                        ]}
-                      >
-                        {isSubscribed ? (
-                          <View style={S.subscribedInner}>
-                            <Ionicons
-                              name="checkmark"
-                              size={16}
-                              color="#ff5e00"
-                            />
-                            <Text style={S.subscribeTextSubscribed}>
-                              Subscribed
-                            </Text>
-                          </View>
-                        ) : (
-                          <Text style={S.subscribeText}>Subscribe</Text>
-                        )}
-                      </Animated.View>
-                    </Pressable>
-                  )}
+                  {showSubscribe &&
+                    (!subscribeControlled || canSubscribe) && (
+                      <ChannelSubscribeButton
+                        isSubscribed={isSubscribed}
+                        disabled={subscribeControlled && subscribePending}
+                        onPress={handleSubscribe}
+                      />
+                    )}
                 </>
               )}
             </View>
