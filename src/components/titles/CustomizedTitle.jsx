@@ -1,7 +1,16 @@
-import { Pressable, Text, View } from "react-native";
+import {
+  Linking,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+  useWindowDimensions,
+} from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { useState } from "react";
+import { useMemo, useState } from "react";
+import RenderHTML from "react-native-render-html";
 import { CustomizedTitleStyles } from "../../styles/CustomizedTitleStyles";
+import { prepareRichHtmlForMobile } from "../../utils/prepareRichHtmlForMobile";
 
 /**
  * CustomizedTitle
@@ -31,10 +40,18 @@ export function CustomizedTitle({
   textStyle,
 }) {
   const [expanded, setExpanded] = useState(false);
+  const { width: windowWidth } = useWindowDimensions();
   const displayTitle = title || "Untitled";
   const displayDescription =
     description || "Watch to discover more about this video and the creator.";
   const hasDescription = true;
+
+  const descriptionHtml = useMemo(
+    () => prepareRichHtmlForMobile(displayDescription),
+    [displayDescription],
+  );
+
+  const htmlContentWidth = Math.max(200, windowWidth - 80);
 
   return (
     <View style={[CustomizedTitleStyles.container, style]}>
@@ -69,9 +86,56 @@ export function CustomizedTitle({
 
       {hasDescription && expanded && (
         <View style={CustomizedTitleStyles.description}>
-          <Text style={[CustomizedTitleStyles.descriptionText, { fontFamily }]}>
-            {displayDescription}
-          </Text>
+          <RenderHTML
+            contentWidth={htmlContentWidth}
+            source={{ html: descriptionHtml || "<p></p>" }}
+            baseStyle={StyleSheet.flatten([
+              CustomizedTitleStyles.descriptionText,
+              { fontFamily, color: "rgba(255, 255, 255, 0.92)" },
+            ])}
+            tagsStyles={{
+              h1: {
+                fontSize: 22,
+                fontWeight: "700",
+                marginVertical: 8,
+                color: textColor,
+              },
+              h2: {
+                fontSize: 20,
+                fontWeight: "700",
+                marginVertical: 6,
+                color: textColor,
+              },
+              h3: {
+                fontSize: 18,
+                fontWeight: "700",
+                marginVertical: 6,
+                color: textColor,
+              },
+              p: { marginVertical: 6 },
+              ul: { marginVertical: 6, paddingLeft: 18 },
+              ol: { marginVertical: 6, paddingLeft: 18 },
+              li: { marginVertical: 2 },
+              a: { color: "#ff6000", textDecorationLine: "underline" },
+              blockquote: {
+                marginVertical: 8,
+                paddingLeft: 12,
+                borderLeftWidth: 3,
+                borderLeftColor: "rgba(255, 255, 255, 0.25)",
+              },
+            }}
+            renderersProps={{
+              a: {
+                onPress: async (_event, href) => {
+                  try {
+                    if (href) await Linking.openURL(href);
+                  } catch (e) {
+                    console.warn("CustomizedTitle: open URL failed", e);
+                  }
+                },
+              },
+            }}
+          />
           <Pressable
             onPress={() => setExpanded(false)}
             style={({ pressed }) => [
