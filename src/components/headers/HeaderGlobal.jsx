@@ -11,9 +11,15 @@ import { headerGlobalStyles } from "../../styles/headerGlobalStyles";
  * - aiIcon: ReactNode
  * - notificationIcon: ReactNode
  * - searchIcon: ReactNode
+ * - onSearchPress: () => void — when set, the search icon is pressable
  */
 
-export function HeaderGlobal({ aiIcon, notificationIcon, searchIcon }) {
+export function HeaderGlobal({
+  aiIcon,
+  notificationIcon,
+  searchIcon,
+  onSearchPress,
+}) {
   return (
     <View style={headerGlobalStyles.container}>
       <Image
@@ -29,7 +35,13 @@ export function HeaderGlobal({ aiIcon, notificationIcon, searchIcon }) {
         <TouchableOpacity style={headerGlobalStyles.icons}>
           {notificationIcon}
         </TouchableOpacity>
-        <TouchableOpacity style={headerGlobalStyles.icons}>
+        <TouchableOpacity
+          style={headerGlobalStyles.icons}
+          onPress={onSearchPress}
+          disabled={!onSearchPress}
+          accessibilityRole="button"
+          accessibilityLabel="Search"
+        >
           {searchIcon}
         </TouchableOpacity>
       </View>
