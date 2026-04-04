@@ -39,6 +39,14 @@ export const MenuInteraction = ({
   pressed,
   canDelete,
   onDelete,
+  /**
+   * When true, like/dislike UI and counts come only from props (`userLiked`,
+   * `userDisliked`, `likesCount`, `dislikesCount`); presses call `onLike` /
+   * `onDislike` without local toggling (wire engagement: parent + API).
+   */
+  engagementManagedExternally = false,
+  userLiked: userLikedProp = false,
+  userDisliked: userDislikedProp = false,
   initialLiked = false,
   initialDisliked = false,
   likesCount = 0,
@@ -48,6 +56,9 @@ export const MenuInteraction = ({
   onShare,
   onComment,
   onRepost,
+  /** Wire surfaces: hide comment (ellipsis bubble) and repost. Video keeps defaults. */
+  showCommentAction = true,
+  showRepostAction = true,
   variant = "default",
   showMenuButton = false,
   onMenuPress,
@@ -60,30 +71,49 @@ export const MenuInteraction = ({
 }) => {
   const isMinimal = variant === "minimal";
   const [open, setOpen] = useState(false);
-  const [liked, setLiked] = useState(initialLiked);
-  const [disliked, setDisliked] = useState(initialDisliked);
+  const [internalLiked, setInternalLiked] = useState(initialLiked);
+  const [internalDisliked, setInternalDisliked] = useState(initialDisliked);
+
+  const liked = engagementManagedExternally
+    ? Boolean(userLikedProp)
+    : internalLiked;
+  const disliked = engagementManagedExternally
+    ? Boolean(userDislikedProp)
+    : internalDisliked;
 
   // Re-sync to server-authoritative state whenever video data is refetched
   useEffect(() => {
-    setLiked(initialLiked);
-  }, [initialLiked]);
+    if (!engagementManagedExternally) {
+      setInternalLiked(initialLiked);
+    }
+  }, [initialLiked, engagementManagedExternally]);
 
   useEffect(() => {
-    setDisliked(initialDisliked);
-  }, [initialDisliked]);
+    if (!engagementManagedExternally) {
+      setInternalDisliked(initialDisliked);
+    }
+  }, [initialDisliked, engagementManagedExternally]);
   const iconSize = 22;
 
   function handleLike() {
-    const wasLiked = liked;
-    setLiked(!wasLiked);
-    if (disliked) setDisliked(false); // mutual exclusion
+    if (engagementManagedExternally) {
+      onLike?.();
+      return;
+    }
+    const wasLiked = internalLiked;
+    setInternalLiked(!wasLiked);
+    if (internalDisliked) setInternalDisliked(false);
     onLike?.();
   }
 
   function handleDislike() {
-    const wasDisliked = disliked;
-    setDisliked(!wasDisliked);
-    if (liked) setLiked(false); // mutual exclusion
+    if (engagementManagedExternally) {
+      onDislike?.();
+      return;
+    }
+    const wasDisliked = internalDisliked;
+    setInternalDisliked(!wasDisliked);
+    if (internalLiked) setInternalLiked(false);
     onDislike?.();
   }
 
@@ -160,26 +190,34 @@ export const MenuInteraction = ({
             </View>
           </Pressable>
 
-          <Pressable
-            onPress={() => {
-              onComment?.();
-            }}
-            style={reactiveStyle}
-          >
-            <View style={iconStyle}>
-              <Ionicons
-                name="chatbubble-ellipses"
-                size={iconSize}
-                color="#e4e4e7"
-              />
-            </View>
-          </Pressable>
+          {showCommentAction && (
+            <Pressable
+              onPress={() => {
+                onComment?.();
+              }}
+              style={reactiveStyle}
+            >
+              <View style={iconStyle}>
+                <Ionicons
+                  name="chatbubble-ellipses"
+                  size={iconSize}
+                  color="#e4e4e7"
+                />
+              </View>
+            </Pressable>
+          )}
 
-          <Pressable onPress={() => onRepost?.()} style={reactiveStyle}>
-            <View style={iconStyle}>
-              <Ionicons name="repeat-outline" size={iconSize} color="#e4e4e7" />
-            </View>
-          </Pressable>
+          {showRepostAction && (
+            <Pressable onPress={() => onRepost?.()} style={reactiveStyle}>
+              <View style={iconStyle}>
+                <Ionicons
+                  name="repeat-outline"
+                  size={iconSize}
+                  color="#e4e4e7"
+                />
+              </View>
+            </Pressable>
+          )}
         </View>
       </ScrollView>
 
